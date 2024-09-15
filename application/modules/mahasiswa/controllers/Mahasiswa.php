@@ -11,11 +11,16 @@ Class Mahasiswa extends MX_Controller {
 
     function index() {
 		
-		if($this->session->userdata('login_status') == 'admin') {
-		    $data['data'] = $this->db->select('*')->from('mahasiswa')->get()->result(); //Untuk mengambil data dari database webinar
-			$this->template->load('template','mahasiswa/listadmin', $data);
+		if ($this->session->userdata('login_status') == 'admin') {
+			// Admin can see all students, with JOIN to get `nama_prodi` from `tblprodi`
+			$data['data'] = $this->db->select('tblmahasiswa.*, tblprodi.nama_prodi')
+				->from('tblmahasiswa')
+				->join('tblprodi', 'tblmahasiswa.prodi_mhs = tblprodi.kode_prodi') // Join to get `nama_prodi`
+				->get()
+				->result();
+			$this->template->load('template', 'mahasiswa/listadmin', $data);
 		} else if ($this->session->userdata('login_status')== 'prodi') {
-			$data['data'] = $this->db->select('*')->from('mahasiswa')->like('namaprodi', $this->session->userdata('nama'))->get()->result(); //Untuk mengambil data dari database webinar
+			$data['data'] = $this->db->select('*')->from('tblmahasiswa')->like('nama_prodi', $this->session->userdata('nama'))->get()->result(); //Untuk mengambil data dari database webinar
 			$this->template->load('templateprodi','mahasiswa/listadmin', $data);
 		} else {
 			redirect('dashboard');
@@ -25,7 +30,7 @@ Class Mahasiswa extends MX_Controller {
 	function laporan() {
 		
 		if($this->session->userdata('login_status') == 'admin') {
-		    $data['data'] = $this->db->select('*')->from('mahasiswa')->get()->result(); //Untuk mengambil data dari database webinar
+		    $data['data'] = $this->db->select('*')->from('tblmahasiswa')->get()->result(); //Untuk mengambil data dari database webinar
 			$this->template->load('template','mahasiswa/laporan', $data);
 		} else {
 			redirect('dashboard');
@@ -42,81 +47,80 @@ Class Mahasiswa extends MX_Controller {
 		}
     }
 
-function add() {
-	if(isset($_POST['submit'])){
-    $isi = array(          
-            'nokk'     => $this->input->post('nokk'),
-			'nikortu'     => $this->input->post('nikortu'),
-			'namaortu'     => $this->input->post('namaortu'),
-			'nik'     => $this->input->post('nik'),
-			'nim'     => $this->input->post('nim'),
-			'nama'     => $this->input->post('nama'),
-			'alamat'     => $this->input->post('alamat'),
-			'kabupaten'     => $this->input->post('kabupaten'),
-			'nohp'     => $this->input->post('nohp'),
-			'kodeprodi'     => $this->input->post('kodeprodi'),
-			'namaprodi'     => $this->input->post('namaprodi'),
-			'semester'     => $this->input->post('semester'),
-			'ipk'     => $this->input->post('ipk'),
-			'angkatan'     => $this->input->post('angkatan'),
-			'bank'     => $this->input->post('bank'),
-			'namarekening'     => $this->input->post('namarekening'),
-			'norekening'     => $this->input->post('norekening'),
-			'jenis'     => $this->input->post('jenis'),
-			'username'     => $this->input->post('username'),
-			'password'     => $this->input->post('password')
-        );
-        $this->db->insert('mahasiswa',$isi);
-        redirect('mahasiswa');
-	} else {
-		$this->template->load('template', 'mahasiswa/add');
+	public function add() {
+		if ($this->input->post('submit')) {
+			// Prepare data for insertion
+			$data = array(
+				'nim' => $this->input->post('nim'),
+				'nama_mhs' => $this->input->post('nama_mhs'),
+				'nik_mhs' => $this->input->post('nik_mhs'),
+				'gender_mhs' => $this->input->post('gender_mhs'),
+				'tempat_lahir_mhs' => $this->input->post('tempat_lahir_mhs'),
+				'tanggal_lahir_mhs' => $this->input->post('tanggal_lahir_mhs'),
+				'alamat_mhs' => $this->input->post('alamat_mhs'),
+				'no_hp_mhs' => $this->input->post('no_hp_mhs'),
+				'email_mhs' => $this->input->post('email_mhs'),
+				'prodi_mhs' => $this->input->post('prodi_mhs'),
+				'angkatan' => $this->input->post('angkatan'),
+				'username_mhs' => $this->input->post('username_mhs'),
+				'password_mhs' => $this->input->post('password_mhs')
+			);
+	
+			// Insert data into `tblmahasiswa`
+			$this->db->insert('tblmahasiswa', $data);
+			redirect('mahasiswa');
+		} else {
+			// Load form and get list of prodi
+			$data['prodi_list'] = $this->db->get('tblprodi')->result_array(); // Assuming you have a tblprodi table
+			$this->template->load('template', 'mahasiswa/add', $data);
+		}
 	}
-    }
+	
+	
+	
 	
     
-function edit(){
-	if(isset($_POST['submit'])){
-            $data = array(
-            'nokk'     => $this->input->post('nokk'),
-			'nikortu'     => $this->input->post('nikortu'),
-			'namaortu'     => $this->input->post('namaortu'),
-			'nik'     => $this->input->post('nik'),
-			'nim'     => $this->input->post('nim'),
-			'nama'     => $this->input->post('nama'),
-			'alamat'     => $this->input->post('alamat'),
-			'kabupaten'     => $this->input->post('kabupaten'),
-			'nohp'     => $this->input->post('nohp'),
-			'kodeprodi'     => $this->input->post('kodeprodi'),
-			'namaprodi'     => $this->input->post('namaprodi'),
-			'semester'     => $this->input->post('semester'),
-			'ipk'     => $this->input->post('ipk'),
-			'angkatan'     => $this->input->post('angkatan'),
-			'bank'     => $this->input->post('bank'),
-			'namarekening'     => $this->input->post('namarekening'),
-			'norekening'     => $this->input->post('norekening'),
-			'jenis'     => $this->input->post('jenis'),
-			'username'     => $this->input->post('username'),
-			'password'     => $this->input->post('password')
-        );
-        $id   = $this->input->post('id_mahasiswa');
-        $this->db->where('id_mahasiswa',$id);
-        $this->db->update('mahasiswa',$data);
-        redirect('mahasiswa');
-        }else{
-            $id           = $this->uri->segment(3);
-            $data['data'] = $this->db->get_where('mahasiswa',array('id_mahasiswa'=>$id))->row_array();
-			if($this->session->userdata('login_status') == 'admin') {
-		    $this->template->load('template', 'mahasiswa/editadmin',$data);
+	public function edit()
+	{
+		if (isset($_POST['submit'])) {
+			// Prepare the data array with the updated column names
+			$data = array(
+				'nim'                => $this->input->post('nim'),
+				'nama_mhs'           => $this->input->post('nama'),
+				'nik_mhs'            => $this->input->post('nik'),
+				'gender_mhs'         => $this->input->post('gender'),
+				'tempat_lahir_mhs'   => $this->input->post('tempat_lahir'),
+				'tanggal_lahir_mhs'  => $this->input->post('tanggal_lahir'),
+				'alamat_mhs'         => $this->input->post('alamat'),
+				'no_hp_mhs'          => $this->input->post('no_hp'),
+				'email_mhs'          => $this->input->post('email'),
+				'prodi_mhs'          => $this->input->post('kodeprodi'), // assuming 'kodeprodi' is passed as the prodi code
+				'angkatan'           => $this->input->post('angkatan'),
+				'username_mhs'       => $this->input->post('username'),
+				'password_mhs'       => $this->input->post('password')
+			);
+	
+			$id = $this->input->post('id'); // Ensure this ID is being passed from the form
+			$this->db->where('id', $id); // Adjust 'id_mahasiswa' to 'id'
+			$this->db->update('tblmahasiswa', $data); // Adjust table name to 'tblmahasiswa'
+			redirect('mahasiswa');
 		} else {
-			redirect('dashboard');
+			$id = $this->uri->segment(3); // Get ID from URI segment
+			$data['data'] = $this->db->get_where('tblmahasiswa', array('id' => $id))->row_array(); // Adjust 'id_mahasiswa' to 'id'
+	
+			// Check user session status and load appropriate view
+			if ($this->session->userdata('login_status') == 'admin') {
+				$this->template->load('template', 'mahasiswa/editadmin', $data);
+			} else {
+				redirect('dashboard');
+			}
 		}
-            
-        }
-    }
+	}
+	
 	
 	function lihat(){
 		 $id_peserta           = $this->uri->segment(3);
-         $data['peserta'] = $this->db->get_where('mahasiswa',array('id_mahasiswa'=>$id_peserta))->row_array();
+         $data['peserta'] = $this->db->get_where('tblmahasiswa',array('id'=>$id_peserta))->row_array();
 		if ($this->session->userdata('login_status')== 'admin') {
             $this->template->load('template', 'mahasiswa/lihat',$data);
 		} else {
@@ -128,8 +132,8 @@ function edit(){
         $id = $this->uri->segment(3);
         if(!empty($id)){
             // proses delete data
-            $this->db->where('id_mahasiswa',$id);
-            $this->db->delete('mahasiswa');
+            $this->db->where('id',$id);
+            $this->db->delete('tblmahasiswa');
         }
         redirect('mahasiswa');
     }
