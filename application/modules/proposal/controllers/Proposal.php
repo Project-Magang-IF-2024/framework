@@ -162,9 +162,9 @@ Class Proposal extends MX_Controller {
         if(!empty($id)){
             // proses delete data
             $this->db->where('id',$id);
-            $this->db->delete('tblmahasiswa');
+            $this->db->delete('tblproposal');
         }
-        redirect('mahasiswa');
+        redirect('proposal');
     }
 
 }
