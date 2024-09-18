@@ -22,49 +22,60 @@
                 <?php echo form_open_multipart('proposal/add', 'role="form" method="post" class="theme-form mega-form"'); ?>
                 <div class="card">
                     <div class="card-header">
-                        <h5>Form Input Data Mahasiswa</h5>
+                        <h5>Form Input Data Proposal</h5>
                     </div>
                     <div class="card-body">
-                        <h6>Identitas Diri</h6>
+                        <!-- <h6>Identitas Proposal</h6> -->
                         <div class="form-group">
-                            <label class="col-form-label">NIK Mahasiswa</label>
-                            <input class="form-control" name="nik_mhs" type="text" placeholder="Isikan NIK Mahasiswa" required>
+                            <label class="col-form-label">Judul Proposal</label>
+                            <input class="form-control" name="judul_proposal" type="text" placeholder="Isi Judul Proposal" required>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Nomor Induk Mahasiswa</label>
-                            <input class="form-control" name="nim" type="text" placeholder="Isikan NIM" required>
+                            <label class="col-form-label">Periode Proposal</label>
+                            <select class="form-control" name="periode_prop" type="text" placeholder="Isi Periode Proposal" required>
+                                <option value="">Pilih Periode Proposal</option>
+                                <?php foreach ($periode_list as $periode) : ?>
+                                    <option value="<?php echo $periode['kode_thn_akad']; ?>"><?php echo $periode['nama_thn_akad']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Nama</label>
-                            <input class="form-control" name="nama_mhs" type="text" placeholder="Isikan Nama" required>
+                            <label class="col-form-label">Prodi Mahasiswa</label>
+                            <select class="form-control" name="prodi_prop" type="text" placeholder="Isi Prodi Mahasiswa" required>
+                                <option value="">Pilih Prodi Mahasiswa</option>
+                                <?php foreach ($prodi_list as $prodi) : ?>
+                                    <option value="<?php echo $prodi['kode_prodi']; ?>"><?php echo $prodi['nama_prodi']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Alamat</label>
-                            <input class="form-control" name="alamat_mhs" type="text" placeholder="Isikan Alamat" required>
+                            <label class="col-form-label">NIM Mahasiswa</label>
+                            <input class="form-control" name="nim_prop" type="text" placeholder="Isi NIM Mahasiswa" required>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">No HP</label>
-                            <input class="form-control" name="no_hp_mhs" type="text" placeholder="Isikan No HP" required>
+                            <label class="col-form-label">Pembimbing 1</label>
+                            <select class="form-control" name="nik_pembimbing1" required>
+                                <option value="">Pilih Pembimbing 1</option>
+                                <?php foreach ($pembimbing_list1 as $dosen) : ?>
+                                    <option value="<?php echo $dosen['nik_dosen']; ?>"><?php echo $dosen['nama_dosen']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Email</label>
-                            <input class="form-control" name="email_mhs" type="email" placeholder="Isikan Email" required>
+                            <label class="col-form-label">Pembimbing 2</label>
+                            <select class="form-control" name="nik_pembimbing2" required>
+                                <option value="">Pilih Pembimbing 2</option>
+                                <?php foreach ($pembimbing_list2 as $dosen) : ?>
+                                    <option value="<?php echo $dosen['nik_dosen']; ?>"><?php echo $dosen['nama_dosen']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Kode Prodi</label>
-                            <input class="form-control" name="prodi_mhs" type="text" placeholder="kode prodi" required>
+                            <label class="col-form-label">Kaprodi</label>
+                            <input class="form-control" name="nik_kaprodi" type="text" placeholder="Isi NIK Kaprodi" required>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Angkatan</label>
-                            <input class="form-control" name="angkatan" type="text" placeholder="Isikan Angkatan" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label">Username</label>
-                            <input class="form-control" name="username_mhs" type="text" placeholder="Isikan Username" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label">Password</label>
-                            <input class="form-control" name="password_mhs" type="text" placeholder="Isikan Password" required>
+                            <input class="form-control" name="acc_kaprodi" type="hidden" value="0" placeholder="Isi Acc Kaprodi" required>
                         </div>
                     </div>
                     <div class="card-footer">

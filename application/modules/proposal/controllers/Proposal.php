@@ -49,30 +49,51 @@ Class Proposal extends MX_Controller {
     }
 
 	public function add() {
-		if ($this->input->post('submit')) {
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('judul_proposal', 'Judul Proposal', 'required');
+		$this->form_validation->set_rules('periode_prop', 'Periode Proposal', 'required');
+		$this->form_validation->set_rules('prodi_prop', 'Prodi Mahasiswa', 'required');
+		$this->form_validation->set_rules('nim_prop', 'NIM Mahasiswa', 'required');
+		$this->form_validation->set_rules('nik_pembimbing1', 'NIK Pembimbing 1', 'required');
+		$this->form_validation->set_rules('nik_pembimbing2', 'NIK Pembimbing 2', 'required');
+		$this->form_validation->set_rules('nik_kaprodi', 'NIK Kaprodi', 'required');
+
+		if ($this->form_validation->run() == TRUE) {
+			$nim_prop = $this->input->post('nim_prop');
+			
+			// Periksa apakah NIM ada di tblmahasiswa
+			$mahasiswa_exists = $this->db->where('nim', $nim_prop)->get('tblmahasiswa')->num_rows() > 0;
+			
+			if (!$mahasiswa_exists) {
+				$this->session->set_flashdata('error', 'NIM tidak ditemukan dalam database mahasiswa.');
+				redirect('proposal/add');
+				return;
+			}
+
 			// Prepare data for insertion
+			$kode_prop = substr($this->input->post('periode_prop'), -3).$this->input->post('prodi_prop');
 			$data = array(
-				'nim' => $this->input->post('nim'),
-				'nama_mhs' => $this->input->post('nama_mhs'),
-				'nik_mhs' => $this->input->post('nik_mhs'),
-				'gender_mhs' => $this->input->post('gender_mhs'),
-				'tempat_lahir_mhs' => $this->input->post('tempat_lahir_mhs'),
-				'tanggal_lahir_mhs' => $this->input->post('tanggal_lahir_mhs'),
-				'alamat_mhs' => $this->input->post('alamat_mhs'),
-				'no_hp_mhs' => $this->input->post('no_hp_mhs'),
-				'email_mhs' => $this->input->post('email_mhs'),
-				'prodi_mhs' => $this->input->post('prodi_mhs'),
-				'angkatan' => $this->input->post('angkatan'),
-				'username_mhs' => $this->input->post('username_mhs'),
-				'password_mhs' => $this->input->post('password_mhs')
+				'judul_proposal' => $this->input->post('judul_proposal'),
+				'periode_prop' => $this->input->post('periode_prop'),
+				'prodi_prop' => $this->input->post('prodi_prop'),
+				'nim_prop' => $nim_prop,
+				'kode_prop' => $kode_prop,
+				'nik_pembimbing1' => $this->input->post('nik_pembimbing1'),
+				'nik_pembimbing2' => $this->input->post('nik_pembimbing2'),
+				'nik_kaprodi' => $this->input->post('nik_kaprodi'),
 			);
 	
 			// Insert data into `tblproposal`
 			$this->db->insert('tblproposal', $data);
-			redirect('mahasiswa');
+			$this->session->set_flashdata('success', 'Proposal berhasil ditambahkan.');
+			redirect('proposal');
 		} else {
 			// Load form and get list of prodi
-			$data['prodi_list'] = $this->db->get('tblprodi')->result_array(); // Assuming you have a tblprodi table
+			$data['pembimbing_list1'] = $this->db->get('tbldosen')->result_array();
+			$data['pembimbing_list2'] = $this->db->get('tbldosen')->result_array();
+			$data['prodi_list'] = $this->db->get('tblprodi')->result_array();
+			$data['periode_list'] = $this->db->get('tblthnakademik')->result_array();
 			$this->template->load('template', 'proposal/add', $data);
 		}
 	}
