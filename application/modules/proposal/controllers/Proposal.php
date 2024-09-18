@@ -120,10 +120,17 @@ Class Proposal extends MX_Controller {
 	
 	
 	function lihat(){
-		 $id_peserta           = $this->uri->segment(3);
-         $data['peserta'] = $this->db->get_where('tblmahasiswa',array('id'=>$id_peserta))->row_array();
-		if ($this->session->userdata('login_status')== 'admin') {
-            $this->template->load('template', 'proposal/lihat',$data);
+		$id_peserta = $this->uri->segment(3);
+    	$data['peserta'] = $this->db->select('tblproposal.*, tblmahasiswa.* , tblprodi.nama_prodi, tbldosen.nama_dosen')
+			->from('tblproposal')
+			->join('tblmahasiswa', 'tblmahasiswa.nim = tblproposal.nim_prop')
+			->join('tblprodi', 'tblproposal.prodi_prop = tblprodi.kode_prodi')
+			->join('tbldosen', 'tbldosen.nik_dosen = tblproposal.nik_pembimbing1')
+			->where('tblproposal.id', $id_peserta)
+			->get()
+			->row_array();
+		if ($this->session->userdata('login_status') == 'admin') {
+            $this->template->load('template', 'proposal/lihat', $data);
 		} else {
 			redirect('dashboard');
 		}
