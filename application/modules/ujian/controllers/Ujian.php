@@ -1,6 +1,6 @@
 <?php
 
-Class Proposal extends MX_Controller {
+Class Ujian extends MX_Controller {
 
     function __construct() {
         parent::__construct();
@@ -14,15 +14,14 @@ Class Proposal extends MX_Controller {
 		if ($this->session->userdata('login_status') == 'admin') {
 			// Admin can see all students, with JOIN to get `nama_prodi` from `tblprodi`
 			$data['data'] = $this->db->select('*')
-				->from('tblproposal')
-				// ->join('tblprodi', 'tblprodi.kode_prodi = tblprodi.nama_prodi') // Join to get `nama_prodi`
+				->from('tblujianproposal')
 				->get()
 				->result();
 			
-			$this->template->load('template', 'proposal/listadmin', $data);
+			$this->template->load('template', 'ujian/listadmin', $data);
 		} else if ($this->session->userdata('login_status')== 'prodi') {
-			$data['data'] = $this->db->select('*')->from('tblproposal')->like('judul_proposal', $this->session->userdata('nama'))->get()->result(); //Untuk mengambil data dari database webinar
-			$this->template->load('templateprodi','proposal/listadmin', $data);
+			$data['data'] = $this->db->select('*')->from('tblujianproposal')->like('judulnya_proposal', $this->session->userdata('nama'))->get()->result(); //Untuk mengambil data dari database webinar
+			$this->template->load('templateprodi','ujian/listadmin', $data);
 		} else {
 			redirect('dashboard');
 		}
@@ -32,7 +31,7 @@ Class Proposal extends MX_Controller {
 		
 		if($this->session->userdata('login_status') == 'admin') {
 		    $data['data'] = $this->db->select('*')->from('tblproposal')->get()->result(); //Untuk mengambil data dari database webinar
-			$this->template->load('template','proposal/laporan', $data);
+			$this->template->load('template','ujian/laporan', $data);
 		} else {
 			redirect('dashboard');
 		}
@@ -42,7 +41,7 @@ Class Proposal extends MX_Controller {
 		$id_peserta           = $this->uri->segment(3);
          $data['peserta'] = $this->db->get_where('mahasiswa',array('id_mahasiswa'=>$id_peserta))->row_array();
 		if ($this->session->userdata('login_status')== 'admin') {
-            $this->template->load('template', 'proposal/history',$data);
+            $this->template->load('template', 'ujian/history',$data);
 		} else {
 			redirect('dashboard');
 		}
@@ -67,7 +66,7 @@ Class Proposal extends MX_Controller {
 			
 			if (!$mahasiswa_exists) {
 				$this->session->set_flashdata('error', 'NIM tidak ditemukan dalam database mahasiswa.');
-				redirect('proposal/add');
+				redirect('ujian/add');
 				return;
 			}
 
@@ -94,7 +93,7 @@ Class Proposal extends MX_Controller {
 			$data['pembimbing_list2'] = $this->db->get('tbldosen')->result_array();
 			$data['prodi_list'] = $this->db->get('tblprodi')->result_array();
 			$data['periode_list'] = $this->db->get('tblthnakademik')->result_array();
-			$this->template->load('template', 'proposal/add', $data);
+			$this->template->load('template', 'ujian/add', $data);
 		}
 	}
 	
@@ -132,7 +131,7 @@ Class Proposal extends MX_Controller {
 	
 			// Check user session status and load appropriate view
 			if ($this->session->userdata('login_status') == 'admin') {
-				$this->template->load('template', 'proposal/editadmin', $data);
+				$this->template->load('template', 'ujian/editadmin', $data);
 			} else {
 				redirect('dashboard');
 			}
@@ -142,17 +141,17 @@ Class Proposal extends MX_Controller {
 	
 	function lihat(){
 		$id_peserta = $this->uri->segment(3);
-    	$data['peserta'] = $this->db->select('tblproposal.*, tblmahasiswa.*, tblprodi.*, tbldosen.*')
-			->from('tblproposal')
-			->join('tblmahasiswa', 'tblmahasiswa.nim = tblproposal.nim_prop')
-			->join('tblprodi', 'tblproposal.prodi_prop = tblprodi.kode_prodi')
-			->join('tbldosen', 'tbldosen.nik_dosen = tblproposal.nik_pembimbing1')
-			->where('tblproposal.id', $id_peserta)
+    	$data['peserta'] = $this->db->select('tblujianproposal.*, tblmahasiswa.*, tblprodi.nama_prodi')
+			->from('tblujianproposal')
+			->join('tblmahasiswa', 'tblmahasiswa.nim = tblujianproposal.nim_ujian_proposal')
+			->join('tblprodi', 'tblprodi.kode_prodi = tblmahasiswa.prodi_mhs')
+			// ->join('tblprodi', 'tblproposal.prodi_prop = tblprodi.kode_prodi')
+			// ->join('tbldosen', 'tbldosen.nik_dosen = tblproposal.nik_pembimbing1')
+			->where('tblujianproposal.id', $id_peserta)
 			->get()
 			->row_array();
-		
 		if ($this->session->userdata('login_status') == 'admin') {
-            $this->template->load('template', 'proposal/lihat', $data);
+            $this->template->load('template', 'ujian/lihat', $data);
 		} else {
 			redirect('dashboard');
 		}

@@ -63,18 +63,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">ACC Kaprodi</label>
-                            <div class="form-check">
-                                <input class="form-check-input" name="acc_kaprodi" id='setuju' value="1" type="radio">
-                                <label class="form-check-label" for="setuju">
-                                    Setuju
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" name="acc_kaprodi" id='tidaksetuju' value="0" type="radio">
-                                <label class="form-check-label" for="tidaksetuju">
-                                    Tidak Setuju
-                                </label>
-                            </div>
+                            <input class="form-control" name="no_hp" value="<?php echo $data['acc_kaprodi'] ?>" type="text" placeholder="Isikan Nomor HP">
                         </div>
                     </div>
                     <div class="card-footer">

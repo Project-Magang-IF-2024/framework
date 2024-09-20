@@ -134,16 +134,19 @@ function auto_logout() {
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="book"></i><span class="lan-3">Proposal</span></a>
                 </li>
-				<li class="sidebar-list">
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>ujian"><i data-feather="book"></i><span class="lan-3">Ujian Proposal</span></a>
+                </li>
+                <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>mahasiswa"><i data-feather="users"></i><span class="lan-25">Mahasiswa</span></a>
                 </li>
-               <li class="sidebar-list">
+                <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>usulan"><i data-feather="globe"></i><span class="lan-26">Pengajuan</span></a>
                 </li>
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>semester"><i data-feather="book"></i><span class="lan-27">Semester</span></a>
                 </li>
-				<li class="sidebar-list">
+				        <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>semester"><i data-feather="user"></i><span class="lan-28">User Prodi</span></a>
                 </li>
                 <li class="sidebar-list">
