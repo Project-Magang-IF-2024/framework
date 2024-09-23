@@ -31,21 +31,11 @@
                         <h6>Proposal</h6>
                         <div class="form-group">
                             <label class="col-form-label">Periode Proposal</label>
-                            <select class="form-control" name="periode_prop" type="text" placeholder="isi periode proposal" required>
-                                <option value="">Pilih Periode Proposal</option>
-                                <?php foreach ($periode_list as $periode) : ?>
-                                    <option value="<?php echo $periode['kode_thn_akad']; ?>"><?php echo $periode['nama_thn_akad']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input class="form-control" name="periode_prop" value="<?php echo $data['periode_prop'] ?>" type="text" placeholder="isi periode proposal">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Prodi Proposal</label>
-                            <select class="form-control" name="prodi_prop" type="text" placeholder="Isikan prodi proposal" required>
-                                <option value="">Pilih Prodi Proposal</option>
-                                <?php foreach ($prodi_list as $prodi) : ?>
-                                    <option value="<?php echo $prodi['kode_prodi']; ?>"><?php echo $prodi['nama_prodi']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input class="form-control" name="prodi_prop" value="<?php echo $data['prodi_prop'] ?>" type="text" placeholder="Isikan prodi proposal">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">NIM Proposal</label>
@@ -60,22 +50,12 @@
                             <input class="form-control" name="judul_proposal" value="<?php echo $data['judul_proposal'] ?>" type="text" placeholder="Isikan Judul Proposal">
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Pembimbing 1</label>
-                            <select class="form-control" name="nik_pembimbing1" required>
-                                <option value="">Pilih Pembimbing 1</option>
-                                <?php foreach ($pembimbing_list1 as $dosen) : ?>
-                                    <option value="<?php echo $dosen['nik_dosen']; ?>"><?php echo $dosen['nama_dosen']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label class="col-form-label">NIK Pembimbing 1</label>
+                            <input class="form-control" name="nik_pembimbing1" value="<?php echo $data['nik_pembimbing1'] ?>">
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">Pembimbing 2</label>
-                            <select class="form-control" name="nik_pembimbing2" required>
-                                <option value="">Pilih Pembimbing 2</option>
-                                <?php foreach ($pembimbing_list2 as $dosen) : ?>
-                                    <option value="<?php echo $dosen['nik_dosen']; ?>"><?php echo $dosen['nama_dosen']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label class="col-form-label">NIK Pembimbing 2</label>
+                            <input class="form-control" name="nik_pembimbing2" value="<?php echo $data['nik_pembimbing2'] ?>">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">NIK Kaprodi</label>

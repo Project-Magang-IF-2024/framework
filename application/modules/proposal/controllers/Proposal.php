@@ -125,6 +125,10 @@ Class Proposal extends MX_Controller {
 		} else {
 			$id = $this->uri->segment(3); // Get ID from URI segment
 			$data['data'] = $this->db->get_where('tblproposal', array('id' => $id))->row_array();
+			$data['pembimbing_list1'] = $this->db->get('tbldosen')->result_array();
+			$data['pembimbing_list2'] = $this->db->get('tbldosen')->result_array();
+			$data['prodi_list'] = $this->db->get('tblprodi')->result_array();
+			$data['periode_list'] = $this->db->get('tblthnakademik')->result_array();
 			// Check user session status and load appropriate view
 			if ($this->session->userdata('login_status') == 'admin') {
 				$this->template->load('template', 'proposal/editadmin', $data);

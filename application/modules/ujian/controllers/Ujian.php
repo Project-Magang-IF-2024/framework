@@ -66,28 +66,22 @@ Class Ujian extends MX_Controller {
 		$this->form_validation->set_rules('revisi_puji2', 'Revisi PPUJI2', 'required');
 
 		if ($this->form_validation->run() == TRUE) {
-			$nim_prop = $this->input->post('nim_prop');
-			
-			// Periksa apakah NIM ada di tblmahasiswa
-			$mahasiswa_exists = $this->db->where('nim', $nim_prop)->get('tblmahasiswa')->num_rows() > 0;
-			
-			if (!$mahasiswa_exists) {
-				$this->session->set_flashdata('error', 'NIM tidak ditemukan dalam database mahasiswa.');
-				redirect('ujian/add');
-				return;
-			}
-
 			// Prepare data for insertion
-			$kode_prop = substr($this->input->post('periode_prop'), -3).$this->input->post('prodi_prop');
 			$data = array(
-				'judul_proposal' => $this->input->post('judul_proposal'),
-				'periode_prop' => $this->input->post('periode_prop'),
-				'prodi_prop' => $this->input->post('prodi_prop'),
-				'nim_prop' => $nim_prop,
-				'kode_prop' => $kode_prop,
-				'nik_pembimbing1' => $this->input->post('nik_pembimbing1'),
-				'nik_pembimbing2' => $this->input->post('nik_pembimbing2'),
-				'nik_kaprodi' => $this->input->post('nik_kaprodi'),
+				'judulnya_proposal' => $this->input->post('judulnya_proposal'),
+				'periode_ujian_proposal' => $this->input->post('periode_ujian_proposal'),
+				'kode_ujian_proposal' => $this->input->post('kode_ujian_proposal'),
+				'nim_ujian_proposal' => $this->input->post('nim_ujian_proposal'),
+				'tgl_ujian_proposal' => $this->input->post('tgl_ujian_proposal'),
+				'hari_ujian_proposal' => $this->input->post('hari_ujian_proposal'),
+				'jam_ujian_proposal' => $this->input->post('jam_ujian_proposal'),
+				'ruang_ujian_proposal' => $this->input->post('ruang_ujian_proposal'),
+				'nik_pbb1_ujian_proposal' => $this->input->post('nik_pbb1_ujian_proposal'),
+				'nik_pbb2_ujian_proposal' => $this->input->post('nik_pbb2_ujian_proposal'),
+				'revisi_pbb1' => $this->input->post('revisi_pbb1'),
+				'revisi_pbb2' => $this->input->post('revisi_pbb2'),
+				'revisi_puji1' => $this->input->post('revisi_puji1'),
+				'revisi_puji2' => $this->input->post('revisi_puji2'),
 			);
 	
 			// Insert data into `tblproposal`
@@ -123,10 +117,6 @@ Class Ujian extends MX_Controller {
 				'revisi_pbb2'          => $this->input->post('revisi_pbb2'),
 				'revisi_puji1'          => $this->input->post('revisi_puji1'),
 				'revisi_puji2'          => $this->input->post('revisi_puji2'),
-				// 'prodi_mhs'          => $this->input->post('kodeprodi'), // assuming 'kodeprodi' is passed as the prodi code
-				// 'angkatan'           => $this->input->post('angkatan'),
-				// 'username_mhs'       => $this->input->post('username'),
-				// 'password_mhs'       => $this->input->post('password')
 			);
 	
 			$id = $this->input->post('id'); // Ensure this ID is being passed from the form
