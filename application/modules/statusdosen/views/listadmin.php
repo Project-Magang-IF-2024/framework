@@ -14,7 +14,7 @@
         <div class="col-7 align-self-center"></div>
         <div class="col-5 align-self-center">
             <div class="customize-input float-right">
-                <?php echo anchor('status-dosen/add/', '<button class="btn waves-effect waves-light btn-rounded btn-success text-center">Tambah Data</button>'); ?>        
+                <?php echo anchor('statusdosen/add/', '<button class="btn waves-effect waves-light btn-rounded btn-success text-center">Tambah Data</button>'); ?>        
                 <button class="btn waves-effect waves-light btn-rounded btn-primary text-center" data-toggle="modal" data-target="#ModalaAdd">Import Data</button>
             </div>
         </div>
@@ -41,15 +41,14 @@
                             <tbody>
                                 <?php 
                                 $no = 1;
-                                // print_r($data);
-                                // die();
+                                // var_dump($data);
                                 foreach($data as $u) { 
                                 ?>
                                 <tr>  
                                     <td><?php echo $no ?></td>
                                     <td><?php echo $u->nik_dsn ?></td>
                                     <td><?php echo $u->periode_status_dsn ?></td>
-                                    <td><?php echo $u->status_dsn ?></td>
+                                    <td><?php echo $u->status_dosen == 'A' ? 'Aktif' : ($u->status_dosen == 'C' ? 'Cuti' : ($u->status_dosen == 'K' ? 'Keluar' : ($u->status_dosen == 'T' ? 'Tubel' : ($u->status_dosen == 'I' ? 'Ibel' : '')))); ?></td>
                                     <td>
                                         <?php echo anchor('statusdosen/lihat/'.$u->id, '<button type="button" class="btn btn-success text-center" style="margin-top:10px;width:100%;">Lihat Data</button>'); ?>
                                         <?php echo anchor('statusdosen/edit/'.$u->id, '<button type="button" class="btn btn-primary text-center" style="margin-top:10px;width:100%;">Edit Data</button>'); ?>

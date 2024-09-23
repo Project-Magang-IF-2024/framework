@@ -13,15 +13,15 @@ Class StatusDosen extends MX_Controller {
 		
 		if ($this->session->userdata('login_status') == 'admin') {
 			// Admin can see all students, with JOIN to get `nama_prodi` from `tblprodi`
-			$data['data'] = $this->db->select('tblstatusdosen.*, tblthnakademik.nama_thn_akad')
+			$data['data'] = $this->db->select('tblstatusdosen.*, tblthnakademik.*')
 				->from('tblstatusdosen')
-				->join('tblthnakademik', 'tblthnakademik.nama_thn_akad = tblstatusdosen.periode_status_dsn')
+				->join('tblthnakademik', 'tblthnakademik.kode_thn_akad = tblstatusdosen.periode_status_dsn')
 				->get()
 				->result();
 			
 			$this->template->load('template', 'statusdosen/listadmin', $data);
 		} else if ($this->session->userdata('login_status')== 'prodi') {
-			$data['data'] = $this->db->select('*')->from('tblstatusdosen')->like('nik_dsn', $this->session->userdata('nik_dsn'))->get()->result(); //Untuk mengambil data dari database webinar
+			$data['data'] = $this->db->select('*')->from('tblstatusdosen')->get()->result(); //Untuk mengambil data dari database webinar
 			$this->template->load('templateprodi','statusdosen/listadmin', $data);
 		} else {
 			redirect('dashboard');
@@ -106,9 +106,10 @@ Class StatusDosen extends MX_Controller {
 	
 	function lihat(){
 		$id_peserta = $this->uri->segment(3);
-    	$data['peserta'] = $this->db->select('tblstatusdosen.*, tblthnakademik.nama_thn_akad')
+    	$data['peserta'] = $this->db->select('tblstatusdosen.*, tblthnakademik.nama_thn_akad, tbldosen.*')
 			->from('tblstatusdosen')
-			->join('tblthnakademik', 'tblthnakademik.nama_thn_akad = tblstatusdosen.periode_status_dsn')
+			->join('tblthnakademik', 'tblthnakademik.kode_thn_akad = tblstatusdosen.periode_status_dsn')
+			->join('tbldosen', 'tbldosen.nik_dosen = tblstatusdosen.nik_dsn')
 			->where('tblstatusdosen.id', $id_peserta)
 			->get()
 			->row_array();

@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="text-md-right">
-                                        <h3>Data Proposal Mahasiswa</h3>
+                                        <h3>Data Dosen</h3>
                                         <p>Dicetak Tanggal: <?php echo date('M') ?><span> <?php echo date("d"); ?>, <?php echo date("Y"); ?></span><br></p>
                                     </div>
                                     <!-- End Title-->
@@ -53,8 +53,8 @@
                                         <img class="media-object rounded-square img-120" src="<?php echo base_url() ?>assets/images/user/3.jpg" alt="">
                                     </div>
                                     <div class="media-body m-l-20">
-                                        <h4 class="media-heading"><?php echo $peserta['nama_mhs'] ?> </br>NIM : <?php echo $peserta['nim_prop'] ?></h4>
-                                        <br>Prodi : <strong><?php echo $peserta['nama_prodi'] ?></strong></p>
+                                        <h4 class="media-heading"><?php echo $peserta['nama_dosen'] ?> </br>NIK : <?php echo $peserta['nik_dosen'] ?></h4>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                         <tbody>
                                             <tr>
                                                 <td colspan="2">
-                                                    <h6 class="p-2 mb-0">Data Proposal</h6>
+                                                    <h6 class="p-2 mb-0">Data Dosen</h6>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -76,15 +76,7 @@
                                                     <label>Nama</label>
                                                 </td>
                                                 <td>
-                                                    <p class="itemtext"><?php echo $peserta['nama_mhs'] ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label>NIM</label>
-                                                </td>
-                                                <td>
-                                                    <p class="itemtext"><?php echo $peserta['nim_prop'] ?></p>
+                                                    <p class="itemtext"><?php echo $peserta['nama_dosen'] ?></p>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -92,55 +84,47 @@
                                                     <label>NIK</label>
                                                 </td>
                                                 <td>
-                                                    <p class="itemtext"><?php echo $peserta['nik_mhs'] ?></p>
+                                                    <p class="itemtext"><?php echo $peserta['nik_dosen'] ?></p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Judul Proposal</label>
+                                                    <label>Jenis Kelamin</label>
                                                 </td>
                                                 <td>
-                                                    <p class="itemtext"><?php echo $peserta['judul_proposal'] ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label>Periode</label>
-                                                </td>
-                                                <td>
-                                                    <p class="itemtext"><?php echo $peserta['periode_prop'] ?></p>
+                                                    <p class="itemtext"><?php echo $peserta['gender_dosen'] == 'L' ? 'Laki-laki' : 'Perempuan' ?></p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Kaprodi</label>
+                                                    <label>Tempat Lahir</label>
                                                 </td>
                                                 <td>
-                                                    <p class="itemtext"><?php echo $peserta['nama_dosen'] ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label>Pembimbing 1</label>
-                                                </td>
-                                                <td>
-                                                    <p class="itemtext"><?php echo $peserta['nik_pembimbing1'] ?></p>
+                                                    <p class="itemtext"><?php echo $peserta['tempat_lahir'] ?></p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Pembimbing 2</label>
+                                                    <label>Tanggal Lahir</label>
                                                 </td>
                                                 <td>
-                                                    <p class="itemtext"><?php echo $peserta['nik_pembimbing2'] ?></p>
+                                                    <p class="itemtext"><?php echo $peserta['tanggal_lahir'] ?></p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Status ACC Kaprodi</label>
+                                                    <label>No HP</label>
                                                 </td>
                                                 <td>
-                                                    <p class="itemtext"><?php echo $peserta['acc_kaprodi'] == 1 ? 'Disetujui' : 'Ditolak' ?></p>
+                                                    <p class="itemtext"><?php echo $peserta['no_hp_dosen'] ?></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>NUPTK</label>
+                                                </td>
+                                                <td>
+                                                    <p class="itemtext"><?php echo $peserta['nuptk_dosen'] ?></p>
                                                 </td>
                                             </tr>
                                         </tbody>
