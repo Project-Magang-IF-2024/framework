@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Prodi Proposal</label>
-                            <input class="form-control" name="prodi_proposal" value="<?php echo $data['prodi_prop'] ?>" type="text" placeholder="Isikan prodi proposal">
+                            <input class="form-control" name="prodi_prop" value="<?php echo $data['prodi_prop'] ?>" type="text" placeholder="Isikan prodi proposal">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">NIM Proposal</label>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Judul Proposal</label>
-                            <input class="form-control" name="judul_proposal" value="<?php echo $data['judul_proposal'] ?>" type="text" placeholder="Isikan Tempat Lahir">
+                            <input class="form-control" name="judul_proposal" value="<?php echo $data['judul_proposal'] ?>" type="text" placeholder="Isikan Judul Proposal">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">NIK Pembimbing 1</label>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                        <?php echo anchor('mahasiswa', '<button type="button" class="btn btn-danger text-center">Kembali</button>'); ?>
+                        <?php echo anchor('proposal', '<button type="button" class="btn btn-danger text-center">Kembali</button>'); ?>
                     </div>
                 </div>
                 </form>

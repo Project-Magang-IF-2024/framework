@@ -132,10 +132,10 @@ function auto_logout() {
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>dashboard"><i data-feather="home"></i><span class="lan-3">Dashboard</span></a>
                 </li>
                 <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="book"></i><span class="lan-3">Proposal</span></a>
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="book"></i><span class="lan-30">Proposal</span></a>
                 </li>
                 <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>ujian"><i data-feather="book"></i><span class="lan-3">Ujian Proposal</span></a>
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>ujian"><i data-feather="book"></i><span class="lan-36">Ujian Proposal</span></a>
                 </li>
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>mahasiswa"><i data-feather="users"></i><span class="lan-25">Mahasiswa</span></a>

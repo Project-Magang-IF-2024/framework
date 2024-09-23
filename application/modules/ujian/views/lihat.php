@@ -153,7 +153,7 @@
                         <!-- End InvoiceBot-->
                     </div>
                     <div class="col-sm-12 text-center mt-3">
-                        <?php echo anchor('proposal','<button type="button" class="btn btn-danger text-center" style="margin-top:10px;width:30%;">Kembali</button>'); ?>
+                        <?php echo anchor('ujian','<button type="button" class="btn btn-danger text-center" style="margin-top:10px;width:30%;">Kembali</button>'); ?>
                     </div>
                     <!-- End Invoice-->
                     <!-- End Invoice Holder-->

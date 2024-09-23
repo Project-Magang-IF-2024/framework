@@ -50,13 +50,20 @@ Class Ujian extends MX_Controller {
 	public function add() {
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('judul_proposal', 'Judul Proposal', 'required');
-		$this->form_validation->set_rules('periode_prop', 'Periode Proposal', 'required');
-		$this->form_validation->set_rules('prodi_prop', 'Prodi Mahasiswa', 'required');
-		$this->form_validation->set_rules('nim_prop', 'NIM Mahasiswa', 'required');
-		$this->form_validation->set_rules('nik_pembimbing1', 'NIK Pembimbing 1', 'required');
-		$this->form_validation->set_rules('nik_pembimbing2', 'NIK Pembimbing 2', 'required');
-		$this->form_validation->set_rules('nik_kaprodi', 'NIK Kaprodi', 'required');
+		$this->form_validation->set_rules('judulnya_proposal', 'Judul Proposal', 'required');
+		$this->form_validation->set_rules('periode_ujian_proposal', 'Periode Proposal', 'required');
+		$this->form_validation->set_rules('kode_ujian_proposal', 'Kode Ujian Proposal', 'required');
+		$this->form_validation->set_rules('nim_ujian_proposal', 'NIM Mahasiswa', 'required');
+		$this->form_validation->set_rules('tgl_ujian_proposal', 'Tanggal Ujian Proposal', 'required');
+		$this->form_validation->set_rules('hari_ujian_proposal', 'Hari Ujian Proposal', 'required');
+		$this->form_validation->set_rules('jam_ujian_proposal', 'Jam Ujian Proposal', 'required');
+		$this->form_validation->set_rules('ruang_ujian_proposal', 'Ruang Ujian Proposal', 'required');
+		$this->form_validation->set_rules('nik_pbb1_ujian_proposal', 'NIK Pembimbing 1', 'required');
+		$this->form_validation->set_rules('nik_pbb2_ujian_proposal', 'NIK Pembimbing 2', 'required');
+		$this->form_validation->set_rules('revisi_pbb1', 'Revisi PBB1', 'required');
+		$this->form_validation->set_rules('revisi_pbb2', 'Revisi PBB2', 'required');
+		$this->form_validation->set_rules('revisi_puji1', 'Revisi PPUJI1', 'required');
+		$this->form_validation->set_rules('revisi_puji2', 'Revisi PPUJI2', 'required');
 
 		if ($this->form_validation->run() == TRUE) {
 			$nim_prop = $this->input->post('nim_prop');
@@ -96,25 +103,26 @@ Class Ujian extends MX_Controller {
 			$this->template->load('template', 'ujian/add', $data);
 		}
 	}
-	
-	
-	
-	
     
 	public function edit()
 	{
 		if (isset($_POST['submit'])) {
 			// Prepare the data array with the updated column names
 			$data = array(
-				'judul_prop'                => $this->input->post('judul_prop'),
-				'periode_prop'           => $this->input->post('periode_prop'),
-				'prodi_prop'            => $this->input->post('prodi_prop'),
-				'nim_prop'         => $this->input->post('nim_prop'),
-				'kode_prop'   => $this->input->post('kode_prop'),
-				'nik_pembimbing1'  => $this->input->post('nik_pembimbing1'),
-				'nik_pembimbing2'         => $this->input->post('nik_pembimbing2'),
-				'nik_kaprodi'          => $this->input->post('nik_kaprodi'),
-				'acc_kaprodi'          => $this->input->post('acc_kaprodi'),
+				'judulnya_proposal'                => $this->input->post('judulnya_proposal'),
+				'periode_ujian_proposal'           => $this->input->post('periode_ujian_proposal'),
+				'kode_ujian_proposal'            => $this->input->post('kode_ujian_proposal'),
+				'nim_ujian_proposal'         => $this->input->post('nim_ujian_proposal'),
+				'tgl_ujian_proposal'   => $this->input->post('tgl_ujian_proposal'),
+				'hari_ujian_proposal'  => $this->input->post('hari_ujian_proposal'),
+				'jam_ujian_proposal'  => $this->input->post('jam_ujian_proposal'),
+				'ruang_ujian_proposal'         => $this->input->post('ruang_ujian_proposal'),
+				'nik_pbb1_ujian_proposal'          => $this->input->post('nik_pbb1_ujian_proposal'),
+				'nik_pbb2_ujian_proposal'          => $this->input->post('nik_pbb2_ujian_proposal'),
+				'revisi_pbb1'          => $this->input->post('revisi_pbb1'),
+				'revisi_pbb2'          => $this->input->post('revisi_pbb2'),
+				'revisi_puji1'          => $this->input->post('revisi_puji1'),
+				'revisi_puji2'          => $this->input->post('revisi_puji2'),
 				// 'prodi_mhs'          => $this->input->post('kodeprodi'), // assuming 'kodeprodi' is passed as the prodi code
 				// 'angkatan'           => $this->input->post('angkatan'),
 				// 'username_mhs'       => $this->input->post('username'),
@@ -123,12 +131,12 @@ Class Ujian extends MX_Controller {
 	
 			$id = $this->input->post('id'); // Ensure this ID is being passed from the form
 			$this->db->where('id', $id); // Adjust 'id_mahasiswa' to 'id'
-			$this->db->update('tblproposal', $data); // Adjust table name to 'tblproposal'
-			redirect('proposal');
+			$this->db->update('tblujianproposal', $data); // Adjust table name to 'tblproposal'
+			redirect('ujian');
 		} else {
 			$id = $this->uri->segment(3); // Get ID from URI segment
-			$data['data'] = $this->db->get_where('tblproposal', array('id' => $id))->row_array(); // Adjust 'id_mahasiswa' to 'id'
-	
+			$data['data'] = $this->db->get_where('tblujianproposal', array('id' => $id))->row_array(); // Adjust 'id_mahasiswa' to 'id'
+			$data['periode_list'] = $this->db->get('tblthnakademik')->result_array();
 			// Check user session status and load appropriate view
 			if ($this->session->userdata('login_status') == 'admin') {
 				$this->template->load('template', 'ujian/editadmin', $data);
@@ -162,9 +170,9 @@ Class Ujian extends MX_Controller {
         if(!empty($id)){
             // proses delete data
             $this->db->where('id',$id);
-            $this->db->delete('tblproposal');
+            $this->db->delete('tblujianproposal');
         }
-        redirect('proposal');
+        redirect('ujian');
     }
 
 }

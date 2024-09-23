@@ -98,16 +98,12 @@ Class Proposal extends MX_Controller {
 		}
 	}
 	
-	
-	
-	
-    
 	public function edit()
 	{
 		if (isset($_POST['submit'])) {
 			// Prepare the data array with the updated column names
 			$data = array(
-				'judul_prop'                => $this->input->post('judul_prop'),
+				'judul_proposal'                => $this->input->post('judul_proposal'),
 				'periode_prop'           => $this->input->post('periode_prop'),
 				'prodi_prop'            => $this->input->post('prodi_prop'),
 				'nim_prop'         => $this->input->post('nim_prop'),
@@ -128,8 +124,7 @@ Class Proposal extends MX_Controller {
 			redirect('proposal');
 		} else {
 			$id = $this->uri->segment(3); // Get ID from URI segment
-			$data['data'] = $this->db->get_where('tblproposal', array('id' => $id))->row_array(); // Adjust 'id_mahasiswa' to 'id'
-	
+			$data['data'] = $this->db->get_where('tblproposal', array('id' => $id))->row_array();
 			// Check user session status and load appropriate view
 			if ($this->session->userdata('login_status') == 'admin') {
 				$this->template->load('template', 'proposal/editadmin', $data);
