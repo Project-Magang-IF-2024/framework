@@ -9,7 +9,7 @@
     <meta name="author" content="pixelstrap">
    <link rel="icon" href="<?php echo base_url() ?>gambar/unusida.png" type="image/x-icon">
     <link rel="shortcut icon" href="<?php echo base_url() ?>gambar/unusida.png" type="image/x-icon">
-    <title>SIBEA - UNUSIDA</title>
+    <title>SISIP - UNUSIDA</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
@@ -131,26 +131,44 @@ function auto_logout() {
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>dashboard"><i data-feather="home"></i><span class="lan-3">Dashboard</span></a>
                 </li>
-                <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="book"></i><span class="lan-30">Proposal</span></a>
-                </li>
-                <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>ujian"><i data-feather="book"></i><span class="lan-36">Ujian Proposal</span></a>
-                </li>
-                <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>statusdosen"><i data-feather="user"></i><span class="lan-38">Status Dosen</span></a>
-                </li>
-                <li class="sidebar-list">
+				<li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>mahasiswa"><i data-feather="users"></i><span class="lan-25">Mahasiswa</span></a>
                 </li>
                 <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>usulan"><i data-feather="globe"></i><span class="lan-26">Pengajuan</span></a>
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>prodi"><i data-feather="users"></i><span class="lan-25">Prodi</span></a>
                 </li>
                 <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>semester"><i data-feather="book"></i><span class="lan-27">Semester</span></a>
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="users"></i><span class="lan-25">Proposal</span></a>
                 </li>
-				        <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>semester"><i data-feather="user"></i><span class="lan-28">User Prodi</span></a>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>bimbinganproposal"><i data-feather="users"></i><span class="lan-25">Bimbingan Proposal</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>statusacc"><i data-feather="users"></i><span class="lan-25">Status Acc</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>fakultas"><i data-feather="users"></i><span class="lan-25">Fakultas</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>kriterianilai"><i data-feather="users"></i><span class="lan-25">Kriteria Nilai</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>kurikulum"><i data-feather="users"></i><span class="lan-25">Kurikulum</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>nilaiproposal"><i data-feather="users"></i><span class="lan-25">Nilai Proposal</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>statusdosen"><i data-feather="users"></i><span class="lan-25">Status Dosen</span></a>
+                </li>
+               <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>statusmahasiswa"><i data-feather="globe"></i><span class="lan-26">Status Mahasiwa</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>tahunakademik"><i data-feather="book"></i><span class="lan-27">Tahun Akademik</span></a>
+                </li>
+				<li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>ujianproposal"><i data-feather="user"></i><span class="lan-28">Ujian Proposal</span></a>
                 </li>
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>auth/logout"><i data-feather="log-out"></i><span class="lan-10">Logout</span></a>
