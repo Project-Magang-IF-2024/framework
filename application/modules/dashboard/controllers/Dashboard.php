@@ -9,18 +9,34 @@ Class Dashboard extends MX_Controller {
             }
 }
 
-    function index() {
-		if ($this->session->userdata('login_status')== 'mahasiswa') {
-			$data['peserta'] = $this->db->select('*')->from('mahasiswa')->where('id_mahasiswa', $this->session->userdata('id_mahasiswa'))->get()->row_array(); //Untuk mengambil data dari database webinar
-			$this->template->load('templatepeserta','dashboard/dashboard', $data);
-		} else if ($this->session->userdata('login_status')== 'prodi') {
-			$this->template->load('templateprodi','dashboard/dashboardprodi');
-		} else if ($this->session->userdata('login_status')== 'admin') {
-			$this->template->load('template','dashboard/dashboardadmin');
-		} else {
-			redirect('auth');
-		}
+function index() {
+    // Check user login status
+    if ($this->session->userdata('login_status') == 'mahasiswa') {
+        // Fetch data for the Mahasiswa using the 'id' from session
+        $data['peserta'] = $this->db->select('*')
+                                     ->from('tblmahasiswa')
+                                     ->where('id', $this->session->userdata('id')) // Use 'id' here
+                                     ->get()
+                                     ->row_array();
+
+        // Check if the data is found
+        if (empty($data['peserta'])) {
+            // Handle the case where no data is found
+            $this->session->set_flashdata('error', 'Data Mahasiswa tidak ditemukan.');
+            redirect('auth'); // Redirect to login or appropriate page
+        }
+
+        // Load the appropriate template and data
+        $this->template->load('templatepeserta', 'dashboard/dashboard', $data);
+    } else if ($this->session->userdata('login_status') == 'dosen') {
+        $this->template->load('templateprodi', 'dashboard/dashboardprodi');
+    } else if ($this->session->userdata('login_status') == 'admin') {
+        $this->template->load('template', 'dashboard/dashboardadmin');
+    } else {
+        redirect('auth');
     }
+}
+
 	
 	function add() {
 	$uploadFoto = $this->upload_foto();

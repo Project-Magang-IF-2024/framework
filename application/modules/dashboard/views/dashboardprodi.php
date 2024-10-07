@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="media align-items-center">
                     <div class="media-body right-chart-content"> 
-						<h4><?php echo $this->db->from('mahasiswa')->like('namaprodi', $this->session->userdata('nama'))->get()->num_rows(); ?></h4><span>Total Mahasiswa Terdaftar</span>
+						<h4></h4><span>Total Mahasiswa Terdaftar</span>
                     </div>
 				</div>
 			</div>

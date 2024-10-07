@@ -19,56 +19,93 @@ class Auth extends MX_Controller {
         $this->load->view('sukses');
     }
     
-  public function login() {
+    public function login() {
         $this->load->model('auth_model');
-		$cekloginadmin = $this->auth_model->loginadmin($this->input->post('email'), $this->input->post('password'));
-         if ($cekloginadmin == 1) {
-		//ambil detail data
-		$row = $this->auth_model->data_login_admin($this->input->post('email'), $this->input->post('password'));
-            //daftarkan session
+    
+        // Get email and password from input
+        $email = $this->input->post('text');
+        $password = $this->input->post('password');
+    
+        // Check if the user is an admin
+        $cekloginadmin = $this->auth_model->loginadmin($email, $password);
+        if ($cekloginadmin == 1) {
+            // Admin login
+            $row = $this->auth_model->data_login_admin($email, $password);
             $data = array(
                 'logged' => TRUE,
-				'login_status' => 'admin',
-				'nama' => $row->username,
-				
-				'id' => $row->id
+                'login_status' => 'admin',
+                'nama' => $row->username,
+                'id' => $row->id
             );
             $this->session->set_userdata($data);
-            // remember me
-                    if(!empty($this->input->post("remember"))) {
-                      setcookie ("loginId", $this->input->post('email'), time()+ (10 * 365 * 24 * 60 * 60));  
-                      setcookie ("loginPass", $this->input->post('password'),  time()+ (10 * 365 * 24 * 60 * 60));
-                    } else {
-                      setcookie ("loginId",""); 
-                      setcookie ("loginPass","");
-                    }
-         
-//            redirect ke halaman sukses
+            $this->handleRememberMe($email, $password);
+    
             redirect('auth/sukses');
-		} else {
-//            tampilkan pesan error
-            $email = $this->db->select('*')->from('mahasiswa')->where('email',$this->input->post('email'))->get()->num_rows();
-            
-            if($this->input->post('email') == null && $this->input->post('password') == null){
-                $error = 'Silahkan Memasukkan Username dan Password';
-                $this->session->set_flashdata('error',$error);
-            }
-            
-            else if($email == null){
-                $error = 'Data anda tidak terdaftar dalam sistem.';
-                $this->session->set_flashdata('error',$error);
-            }
-            else {
-            $error = 'Username dan Password Tidak Sesuai';
-            $this->session->set_flashdata('error',$error);
-            }
-           $error = 'Cek lagi Username/Password yang anda masukkan';
-            
-            $this->index($error);
         }
-		
-	
+    
+        // Check if the user is a Dosen
+        $ceklogindosen = $this->auth_model->logindosen($email, $password);
+        if ($ceklogindosen == 1) {
+            // Dosen login
+            $row = $this->auth_model->data_login_dosen($email, $password);
+            $data = array(
+                'logged' => TRUE,
+                'login_status' => 'dosen',
+                'nama' => $row->username_dosen,
+                'id' => $row->id
+            );
+            $this->session->set_userdata($data);
+            $this->handleRememberMe($email, $password);
+    
+            redirect('auth/sukses');
+        }
+    
+        // Check if the user is a Mahasiswa
+        $cekloginmahasiswa = $this->auth_model->loginmahasiswa($email, $password);
+        if ($cekloginmahasiswa == 1) {
+            // Mahasiswa login
+            $row = $this->auth_model->data_login_mahasiswa($email, $password);
+            $data = array(
+                'logged' => TRUE,
+                'login_status' => 'mahasiswa',
+                'nama' => $row->nama_mhs,
+                'id' => $row->id
+            );
+            $this->session->set_userdata($data);
+            $this->handleRememberMe($email, $password);
+    
+            redirect('auth/sukses');
+        }
+    
+        // Handle login errors
+        $this->handleLoginError($email, $password);
     }
+    
+    private function handleRememberMe($email, $password) {
+        if (!empty($this->input->post("remember"))) {
+            setcookie("loginId", $email, time() + (10 * 365 * 24 * 60 * 60));
+            setcookie("loginPass", $password, time() + (10 * 365 * 24 * 60 * 60));
+        } else {
+            setcookie("loginId", "");
+            setcookie("loginPass", "");
+        }
+    }
+    
+    private function handleLoginError($email, $password) {
+        $error = '';
+    
+        if ($email == null && $password == null) {
+            $error = 'Silahkan Memasukkan Username dan Password';
+        } elseif ($this->auth_model->check_email_exists($email) == false) {
+            $error = 'Data anda tidak terdaftar dalam sistem.';
+        } else {
+            $error = 'Username dan Password Tidak Sesuai';
+        }
+    
+        $this->session->set_flashdata('error', $error);
+        $this->index($error);
+    }
+    
 
     function logout() {
           

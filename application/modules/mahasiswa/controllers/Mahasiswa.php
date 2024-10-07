@@ -19,8 +19,9 @@ Class Mahasiswa extends MX_Controller {
 				->get()
 				->result();
 			$this->template->load('template', 'mahasiswa/listadmin', $data);
-		} else if ($this->session->userdata('login_status')== 'prodi') {
-			$data['data'] = $this->db->select('*')->from('tblmahasiswa')->like('nama_prodi', $this->session->userdata('nama'))->get()->result(); //Untuk mengambil data dari database webinar
+		} else if ($this->session->userdata('login_status')== 'dosen') {
+			$data['data'] = $this->db->select('*')->from('tblmahasiswa')->get()->result(); 
+			//Query Data mahasiswa yang proposal nya dibimbing oleh dosen yang login beserta info proposalnya
 			$this->template->load('templateprodi','mahasiswa/listadmin', $data);
 		} else {
 			redirect('dashboard');

@@ -9,6 +9,51 @@
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Mengambil data dari PHP ke JavaScript
+        var proposals = <?php echo json_encode($data); ?>;
+        var categories = proposals.map(function(u) { return u.judul_proposal;});
+        var seriesData = proposals.map(function(u) {return u.acc_kaprodi == 1 ? 1 : 0;});
+
+        var options = {
+            chart: {
+                type: 'area',
+                height: 350
+            },
+            series: [{
+                name: 'Status',
+                data: seriesData
+            }],
+            xaxis: {
+                categories: categories
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#area-spaline"), options);
+        chart.render();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const proposals = <?php echo json_encode($data); ?>;
+
+        // Hitung jumlah yang disetujui dan tidak disetujui
+        const approvedCount = proposals.filter(u => u.acc_kaprodi == 1).length;
+        const rejectedCount = proposals.filter(u => u.acc_kaprodi == 0).length;
+
+        new ApexCharts(document.querySelector("#piechart"), {
+            chart: { type: 'pie' },
+            series: [approvedCount, rejectedCount],
+            labels: ['Disetujui', 'Tidak Disetujui']
+        }).render();
+    });
+</script>
+
+
+
+
 <div class="page-breadcrumb" style="margin-top:120px; margin-right:20px">
     <div class="row">
         <div class="col-7 align-self-center"></div>
@@ -20,6 +65,27 @@
         </div>
     </div>
 </div>
+
+<div class="col-sm-12 col-xl-6 box-col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h3>Area Spaline Chart </h3>
+                  </div>
+                  <div class="card-body">
+                    <div id="area-spaline">TEST</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-xl-6 box-col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h3>Pie Chart </h3>
+                  </div>
+                  <div class="card-body apex-chart">
+                    <div id="piechart"></div>
+                  </div>
+                </div>
+              </div>
 
 <div class="container-fluid" style="margin-top:40px">
     <div class="row">

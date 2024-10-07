@@ -74,12 +74,12 @@
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
             <img src="<?php echo base_url() ?>gambar/logofix.png" width="100%"></img>
-            <p class="mb-4" style="text-align:center; margin-top:15px;">Silahkan masukkan NIK dan password untuk masuk pada SIINKA UNUSIDA.</p>
+            <p class="mb-4" style="text-align:center; margin-top:15px;">Silahkan masukkan NIM/NIK/NID dan password untuk masuk pada SIINKA UNUSIDA.</p>
             <h3 style="color:red;"><?php echo $this->session->flashdata('error') ?></h3>
             <form action="<?php echo $action ?>" method="post">
               <div class="form-group first">
-                <label for="username">NIK</label>
-                <input type="text" class="form-control" name="email" placeholder="Masukkan NIK" id="username" value="<?php if(isset($_COOKIE["loginId"])) { echo $_COOKIE["loginId"]; } ?>">
+                <label for="username">NIM/NIK/NID</label>
+                <input type="text" class="form-control" name="text" placeholder="Masukkan NIK" id="username" value="<?php if(isset($_COOKIE["loginId"])) { echo $_COOKIE["loginId"]; } ?>">
               </div>
               <div class="form-group last mb-3">
                 <label for="password">Password</label>
