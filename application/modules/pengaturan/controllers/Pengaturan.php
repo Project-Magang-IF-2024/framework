@@ -1,6 +1,6 @@
 <?php
 
-Class CatatanBimbingan extends MX_Controller {
+Class Pengaturan extends MX_Controller {
 
     function __construct() {
         parent::__construct();
@@ -11,19 +11,24 @@ Class CatatanBimbingan extends MX_Controller {
 
     function index() {
 		
-		if ($this->session->userdata('login_status') == 'mahasiswa') {
+		if ($this->session->userdata('login_status') == 'admin') {
 			// Admin can see all students, with JOIN to get `nama_prodi` from `tblprodi`
 			$data['data'] = $this->db->select('*')
-				->from('tblbimbinganproposal')
-				->where('kd_prop', $this->session->userdata('kd_prop'))
+				->from('user')
+				->where('id_user', $this->session->userdata('id'))
 				->get()
 				->result();
-			$this->template->load('templatepeserta', 'catatanbimbingan/listadmin', $data);
+			$this->template->load('template', 'pengaturan/listadmin', $data);
 		} else if ($this->session->userdata('login_status')== 'dosen') {
-			$data['data'] = $this->db->select('*')->from('tblmahasiswa')->get()->result(); 
+			$data['data'] = $this->db->select('*')->from('user')->where('id', $this->session->userdata('id_user'))->get()->result(); 
 			//Query Data mahasiswa yang proposal nya dibimbing oleh dosen yang login beserta info proposalnya
-			$this->template->load('templatepeserta','catatanbimbingan/listadmin', $data);
-		} else {
+			$this->template->load('templateprodi','pengaturan/listadmin', $data);
+		} else if ($this->session->userdata('login_status') == "mahasiswa"){
+			$data['data'] = $this->db->select('*')->from('user')->where('id', $this->session->userdata('id_user'))->get()->result();
+			$this->template->load('templatepeserta','pengaturan/listadmin', $data);
+		}
+		
+		else {
 			redirect('dashboard');
 		}
     }
@@ -31,8 +36,8 @@ Class CatatanBimbingan extends MX_Controller {
 	function laporan() {
 		
 		if($this->session->userdata('login_status') == 'admin') {
-		    $data['data'] = $this->db->select('*')->from('tblbimbinganproposal')->get()->result(); //Untuk mengambil data dari database webinar
-			$this->template->load('templatepeserta','catatanbimbingan/laporan', $data);
+		    $data['data'] = $this->db->select('*')->from('tblmahasiswa')->get()->result(); //Untuk mengambil data dari database webinar
+			$this->template->load('template','mahasiswa/laporan', $data);
 		} else {
 			redirect('dashboard');
 		}
@@ -40,9 +45,9 @@ Class CatatanBimbingan extends MX_Controller {
 	
 	function history() {
 		$id_peserta           = $this->uri->segment(3);
-         $data['peserta'] = $this->db->get_where('tblbimbinganproposal',array('id_bimbingan'=>$id_peserta))->row_array();
+         $data['peserta'] = $this->db->get_where('mahasiswa',array('id_mahasiswa'=>$id_peserta))->row_array();
 		if ($this->session->userdata('login_status')== 'admin') {
-            $this->template->load('templatepeserta', 'catatanbimbingan/history',$data);
+            $this->template->load('template', 'mahasiswa/history',$data);
 		} else {
 			redirect('dashboard');
 		}
@@ -73,7 +78,7 @@ Class CatatanBimbingan extends MX_Controller {
 		} else {
 			// Load form and get list of prodi
 			$data['prodi_list'] = $this->db->get('tblprodi')->result_array(); // Assuming you have a tblprodi table
-			$this->template->load('templatepeserta', 'catatanbimbingan/add', $data);
+			$this->template->load('template', 'mahasiswa/add', $data);
 		}
 	}
 	
@@ -111,7 +116,7 @@ Class CatatanBimbingan extends MX_Controller {
 	
 			// Check user session status and load appropriate view
 			if ($this->session->userdata('login_status') == 'admin') {
-				$this->template->load('templatepeserta', 'catatanbimbingan/editadmin', $data);
+				$this->template->load('template', 'mahasiswa/editadmin', $data);
 			} else {
 				redirect('dashboard');
 			}
@@ -123,7 +128,7 @@ Class CatatanBimbingan extends MX_Controller {
 		 $id_peserta           = $this->uri->segment(3);
          $data['peserta'] = $this->db->get_where('tblmahasiswa',array('id'=>$id_peserta))->row_array();
 		if ($this->session->userdata('login_status')== 'admin') {
-            $this->template->load('templatepeserta', 'catatanbimbingan/lihat',$data);
+            $this->template->load('template', 'mahasiswa/lihat',$data);
 		} else {
 			redirect('dashboard');
 		}
@@ -136,7 +141,7 @@ Class CatatanBimbingan extends MX_Controller {
             $this->db->where('id',$id);
             $this->db->delete('tblmahasiswa');
         }
-        redirect('catatanbimbingan');
+        redirect('mahasiswa');
     }
 
 }
