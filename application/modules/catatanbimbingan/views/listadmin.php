@@ -30,7 +30,6 @@
                             <thead>
                                 <tr>
                                     <th>NO</th>
-                                    <th>ID</th>
                                     <th>Tanggal</th>
                                     <th>Isi catatan</th>
                                 </tr>
@@ -42,7 +41,6 @@
                                 ?>
                                 <tr>  
                                     <td><?php echo $no ?></td>
-                                    <td><?php echo $u->id ?></td>
                                     <td><?php echo $u->tgl_bimbingan ?></td>
                                     <td><?php echo $u->materi_bimbingan ?></td>
                                 </tr>
