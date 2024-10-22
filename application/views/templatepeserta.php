@@ -131,7 +131,22 @@ function auto_logout() {
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>dashboard"><i data-feather="home"></i><span class="lan-3">Dashboard</span></a>
                 </li>
-               <li class="sidebar-list">
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="file-text"></i><span class="lan-3">Proposal</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>bimbingan"><i data-feather="users"></i><span class="lan-3">Bimbingan</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>catatan"><i data-feather="file-text"></i><span class="lan-3">Catatan Bimbingan</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>akademik"><i data-feather="calendar"></i><span class="lan-3">Akademik</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>pengaturan"><i data-feather="settings"></i><span class="lan-3">Pengaturan</span></a>
+                </li>
+                <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>auth/logout"><i data-feather="log-out"></i><span class="lan-10">Logout</span></a>
                 </li>
               </ul>
