@@ -93,6 +93,8 @@ $data['status_proposal'] = array_reduce($status_proposal_counts, function($carry
     return $carry;
 }, ['acc' => 0, 'pending' => 0, 'ditolak' => 0]);
 
+
+
 // Calculate progress based on acceptance
 $total_proposal = array_sum($data['status_proposal']);
 $data['progress_proposal'] = $total_proposal > 0 ? round(($data['status_proposal']['acc'] / $total_proposal) * 100) : 0;
@@ -101,6 +103,14 @@ $data['progress_proposal'] = $total_proposal > 0 ? round(($data['status_proposal
 $total_accepted = $this->db->where('kode_ujian_proposal IN (SELECT kode_prop FROM tblproposal WHERE nim_prop = "'.$data['peserta']['nim'].'")')
                             ->count_all_results('tblacc');
 $data['total_accepted'] = $total_accepted;
+
+
+$nim = $this->session->userdata('nim'); // Asumsi NIM disimpan dalam sesi
+$data['dataproposal'] = $this->db->select('*')
+    ->from('tblproposal')
+    ->where('nim_prop', $nim)
+    ->get()
+    ->result();
 
     
             // Load the appropriate template and data for Mahasiswa
@@ -118,19 +128,56 @@ $data['total_accepted'] = $total_accepted;
     }
     
 
+
     function add() {
-        $uploadFoto = $this->upload_foto();
-        $id_semester = $this->db->from('semester')->where('status', 'Aktif')->get()->row_array();
-        $isi = array(
-            'id_mahasiswa' => $this->session->userdata('id_mahasiswa'),
-            'id_semester' => $id_semester['id_semester'],
-            'ipk' => $this->input->post('ipk'),
-            'jenis' => $this->input->post('jenis'),
-            'bukti' => $uploadFoto
-        );
-        $this->db->insert('laporan', $isi);
-        redirect('dashboard');
-    }
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('judul_proposal', 'Judul Proposal', 'required');
+		$this->form_validation->set_rules('periode_prop', 'Periode Proposal', 'required');
+		$this->form_validation->set_rules('prodi_prop', 'Prodi Mahasiswa', 'required');
+		$this->form_validation->set_rules('nim_prop', 'NIM Mahasiswa', 'required');
+		$this->form_validation->set_rules('nik_pembimbing1', 'NIK Pembimbing 1', 'required');
+		$this->form_validation->set_rules('nik_pembimbing2', 'NIK Pembimbing 2', 'required');
+		$this->form_validation->set_rules('nik_kaprodi', 'NIK Kaprodi', 'required');
+
+		if ($this->form_validation->run() == TRUE) {
+			$nim_prop = $this->input->post('nim_prop');
+			
+			// Periksa apakah NIM ada di tblmahasiswa
+			$mahasiswa_exists = $this->db->where('nim', $nim_prop)->get('tblmahasiswa')->num_rows() > 0;
+			
+			if (!$mahasiswa_exists) {
+				$this->session->set_flashdata('error', 'NIM tidak ditemukan dalam database mahasiswa.');
+				redirect('dashboard/add');
+				return;
+			}
+
+			// Prepare data for insertion
+			$kode_prop = substr($this->input->post('periode_prop'), -3).$this->input->post('prodi_prop');
+			$data = array(
+				'judul_proposal' => $this->input->post('judul_proposal'),
+				'periode_prop' => $this->input->post('periode_prop'),
+				'prodi_prop' => $this->input->post('prodi_prop'),
+				'nim_prop' => $nim_prop,
+				'kode_prop' => $kode_prop,
+				'nik_pembimbing1' => $this->input->post('nik_pembimbing1'),
+				'nik_pembimbing2' => $this->input->post('nik_pembimbing2'),
+				'nik_kaprodi' => $this->input->post('nik_kaprodi'),
+			);
+	
+			// Insert data into `tblproposal`
+			$this->db->insert('tblproposal', $data);
+			$this->session->set_flashdata('success', 'Proposal berhasil ditambahkan.');
+			redirect('dashboard');
+		} else {
+			// Load form and get list of prodi
+			$data['pembimbing_list1'] = $this->db->get('tbldosen')->result_array();
+			$data['pembimbing_list2'] = $this->db->get('tbldosen')->result_array();
+			$data['prodi_list'] = $this->db->get('tblprodi')->result_array();
+			$data['periode_list'] = $this->db->get('tblthnakademik')->result_array();
+			$this->template->load('templatepeserta', 'dashboard/add', $data);
+		}
+	}
 
     function edit() {
         if (isset($_POST['submit'])) {

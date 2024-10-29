@@ -16,106 +16,33 @@
 </div>
 
 <!-- Profil Mahasiswa -->
-<div class="container">
+<div class="container-fluid" style="margin-top:40px">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="invoice">
-                        <div>
-                            <div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <img class="media-object img-60" src="<?php echo base_url() ?>gambar/unusida.png" alt="">
-                                            </div>
-                                            <div class="media-body m-l-20">
-                                                <h4 class="media-heading">Universitas Nahdlatul Ulama Sidoarjo</h4>
-                                                <p>https://unusida.ac.id</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="text-md-right">
-                                            <h3>Data Mahasiswa</h3>
-                                            <p>Dicetak Tanggal: <?php echo date('M') ?><span> <?php echo date("d"); ?>, <?php echo date("Y"); ?></span><br></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-
-                            <!-- Informasi Mahasiswa -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <img class="media-object rounded-square img-120" src="<?php echo base_url() ?>assets/images/user/3.jpg" alt="">
-                                        </div>
-                                        <div class="media-body m-l-20">
-                                            <h3>Profil Mahasiswa</h3>
+                    <h4 class="card-title">Profil Mahasiswa</h4>
+                    <div class="row mt-4">
+                    <div class="col-md-12">
                                             <p>Nama: <?= $peserta['nama_mhs'] ?></p>
                                             <p>NIM: <?= $peserta['nim'] ?></p>
                                             <p>Program Studi: <?= isset($peserta['nama_prodi']) ? $peserta['nama_prodi'] : 'Tidak tersedia' ?></p>
                                             <p>Status Keaktifan: <?= isset($peserta['status_keaktifan']) ? $peserta['status_keaktifan'] : 'Tidak tersedia' ?></p>
                                             <p>Angkatan: <?= $peserta['angkatan'] ?></p>
                                         </div>
-                                    </div>
-                                </div>
                             </div>
-                            <br>
-
-                            <!-- Notifikasi Proposal -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4>Notifikasi Proposal Terbaru</h4>
-                                    <?php if (!empty($proposal)): ?>
-                                        <p>Status Proposal: <strong><?php echo $proposal['status'] == 'acc' ? 'Disetujui' : 'Menunggu Persetujuan'; ?></strong></p>
-                                        <?php if (!empty($proposal['revisi'])): ?>
-                                            <p>Revisi Terbaru: <strong><?php echo $proposal['revisi']; ?></strong></p>
-                                        <?php endif; ?>
-                                    <?php else: ?>
-                                        <p>Belum ada proposal terbaru.</p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <!-- End Notifikasi Proposal -->
-
-                            <!-- Nilai Proposal -->
-<!-- Nilai Proposal -->
-<!-- Nilai Proposal -->
-<!-- Nilai Proposal -->
-<div class="row mt-4">
-    <div class="col-md-12">
-        <h4>Nilai Proposal</h4>
-        
-        <?php if (!empty($nilai_proposal)): ?>
-            <ul>
-                <?php foreach ($nilai_proposal as $nilai): ?>
-                    <li>
-                        Penguji: <?= $nilai['nama_penguji'] ?><br>
-                        Nilai: <?= $nilai['nilai'] ?><br>
-                        Revisi: <?= $nilai['revisi'] ?><br>
-                        Kriteria: <?= $nilai['nama_kriteria'] ?><br>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>Belum ada nilai ujian proposal terbaru.</p>
-        <?php endif; ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<!-- End Nilai Proposal -->
-
-<!-- End Nilai Proposal -->
-<!-- End Nilai Proposal -->
-
-
-                            <!-- End Nilai Proposal -->
-
-                            <!-- Bimbingan Terbaru -->
-                            <div class="row mt-4">
+<!-- bimbingan -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                <div class="row mt-4">
                                 <div class="col-md-12">
                                     <h4>Bimbingan Terbaru</h4>
                                     <?php if (!empty($bimbingan_terbaru)): ?>
@@ -126,26 +53,20 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            <!-- End Bimbingan Terbaru -->
-
-                            <!-- Aksi Cepat -->
-                            <div class="row mt-4">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Statistik Singkat -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Statistik Singkat</h4>
+                    <div class="row mt-4">
                                 <div class="col-md-12">
-                                    <h4>Aksi Cepat</h4>
-                                    <div class="btn-group">
-                                        <a href="<?php echo base_url('proposal/ajukan') ?>" class="btn btn-primary">Ajukan Proposal Baru</a>
-                                        <a href="<?php echo base_url('ujian/jadwal') ?>" class="btn btn-secondary">Lihat Jadwal Ujian</a>
-                                        <a href="<?php echo base_url('proposal/revisi') ?>" class="btn btn-info">Lihat Revisi Proposal</a>
-                                        <a href="<?php echo base_url('profil/update') ?>" class="btn btn-warning">Update Profil</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Aksi Cepat -->
-
-                            <!-- Statistik Singkat -->
-                            <div class="row mt-4">
-                                <div class="col-md-12">
-                                    <h4>Statistik Singkat</h4>
                                     <p>Jumlah Bimbingan: <strong><?= $jumlah_bimbingan ?></strong></p>
                                     <p>Status Proposal: 
                                         <strong>
@@ -159,10 +80,114 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Statistik Singkat -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- table pengajuan -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Aksi Cepat</h4>
+                    <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <a href="<?php echo base_url('dashboard/add') ?>" class="btn btn-primary">Ajukan Proposal Baru</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="container-fluid">
+                    <div class="table-responsive">
+                        <table class="display" id="basic-1">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>Judul Proposal</th>
+                                    <th>Periode Proposal</th>
+                                    <th>Prodi Proposal</th>
+                                    <th>NIM Mahasiswa</th>
+                                    <th>Kode Proposal</th>
+                                    <th>NIK Pembimbing 1</th>
+                                    <th>NIK Pembimbing 2</th>
+                                    <th>NIK Kaprodi</th>
+                                    <th>Status Persetujuan</th>
+                                    <th>AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $no = 1;
+                                // print_r($data);
+                                // die();
+                                foreach($dataproposal as $u) { 
+                                ?>
+                                <tr>  
+                                    <td><?php echo $no ?></td>
+                                    <td><?php echo $u->judul_proposal ?></td>
+                                    <td><?php echo $u->periode_prop ?></td>
+                                    <td><?php echo $u->prodi_prop ?></td>
+                                    <td><?php echo $u->nim_prop ?></td>
+                                    <td><?php echo $u->kode_prop ?></td>
+                                    <td><?php echo $u->nik_pembimbing1 ?></td>
+                                    <td><?php echo $u->nik_pembimbing2 ?></td>
+                                    <td><?php echo $u->nik_kaprodi ?></td>
+                                    <td><?php echo $u->acc_kaprodi == 1 ? 'Disetujui' : 'Tidak Disetujui' ?></td>
+                                    <td>
+                                        <?php echo anchor('proposal/lihat/'.$u->id, '<button type="button" class="btn btn-success text-center" style="margin-top:10px;width:100%;">Lihat Data</button>'); ?>
+                                        <?php echo anchor('proposal/edit/'.$u->id, '<button type="button" class="btn btn-primary text-center" style="margin-top:10px;width:100%;">Edit Data</button>'); ?>
+                                        <a href="<?php echo base_url() ?>proposal/hapus/<?php echo $u->id ?>" class="btn btn-danger text-center" style="margin-top:10px;width:100%;" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?');">Hapus Data</a>
+                                    </td>
+                                </tr>
+                                <?php $no++; } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ADD -->
+<div class="modal fade" id="ModalaAdd" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">IMPORT DATA</h3>
+            </div>
+            <?php echo form_open_multipart('import/importx', 'role="form" class="form-horizontal"'); ?>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label col-xs-3">File</label>
+                    <div class="col-xs-9">
+                        <input type="file" name="fileimport">
+                    </div>
+                    <br>
+                    <label class="control-label col-xs-3">Unduh Template Import Dapat diunduh pada <a href="<?php echo base_url() ?>template/TemplateMahasiswa.xlsx"> link</a> berikut.</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                <button class="btn btn-info" id="btn_simpan">Simpan</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                            
 
                         </div>
-                        <div class="col-sm-12 text-center mt-3"></div>
+                        <div class="col-sm-12 text-center mt-3">test</div>
                     </div>
                 </div>
             </div>

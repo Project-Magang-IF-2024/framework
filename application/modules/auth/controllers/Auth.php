@@ -69,6 +69,7 @@ class Auth extends MX_Controller {
                 'logged' => TRUE,
                 'login_status' => 'mahasiswa',
                 'nama' => $row->nama_mhs,
+                'nim' => $row->nim,
                 'id' => $row->id
             );
             $this->session->set_userdata($data);
