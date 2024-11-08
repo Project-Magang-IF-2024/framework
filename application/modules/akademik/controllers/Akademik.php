@@ -1,6 +1,6 @@
 <?php
 
-Class Pengaturan extends MX_Controller {
+Class Akademik extends MX_Controller {
 
     function __construct() {
         parent::__construct();
@@ -13,21 +13,34 @@ Class Pengaturan extends MX_Controller {
 		
 		if ($this->session->userdata('login_status') == 'admin') {
 			// Admin can see all students, with JOIN to get `nama_prodi` from `tblprodi`
-			$data['data'] = $this->db->select('*')
-				->from('user')
-				->where('id', $this->session->userdata('id'))
+			$data['data'] = $this->db->select('tblmahasiswa.*, tblprodi.nama_prodi')
+				->from('tblmahasiswa')
+				->join('tblprodi', 'tblmahasiswa.prodi_mhs = tblprodi.kode_prodi') // Join to get `nama_prodi`
 				->get()
 				->result();
-			$this->template->load('template', 'pengaturan/listadmin', $data);
+			$this->template->load('template', 'akademik/listadmin', $data);
 		} else if ($this->session->userdata('login_status')== 'dosen') {
-			$data['data'] = $this->db->select('*')->from('user')->where('id', $this->session->userdata('id_user'))->get()->result(); 
+			$data['data'] = $this
+			->db
+			->select('*')
+			->from('tblmahasiswa')
+			->get()
+			->result(); 
 			//Query Data mahasiswa yang proposal nya dibimbing oleh dosen yang login beserta info proposalnya
-			$this->template->load('templateprodi','pengaturan/listadmin', $data);
+			$this->template->load('templateprodi','akademik/listadmin', $data);
 		} else if ($this->session->userdata('login_status') == "mahasiswa"){
-			$data['data'] = $this->db->select('*')->from('tblmahasiswa')->where('id', $this->session->userdata('id'))->get()->result();
-			$this->template->load('templatepeserta','pengaturan/listadmin', $data);
+			$data['data'] = $this
+			->db
+			->select('tblmahasiswa.*, tblnilaiproposal.*, tblproposal.*')
+			->from('tblmahasiswa')
+			->where('tblmahasiswa.id', $this->session->userdata('id'))
+			->join('tblnilaiproposal', 'tblmahasiswa.id = tblnilaiproposal.id')
+			->join('tblproposal', 'tblmahasiswa.nim = tblproposal.nim_prop')
+			->get()
+			->result();
+
+			$this->template->load('templatepeserta','akademik/listadmin', $data);
 		}
-		
 		else {
 			redirect('dashboard');
 		}
@@ -109,14 +122,14 @@ Class Pengaturan extends MX_Controller {
 			$id = $this->input->post('id'); // Ensure this ID is being passed from the form
 			$this->db->where('id', $id); // Adjust 'id_mahasiswa' to 'id'
 			$this->db->update('tblmahasiswa', $data); // Adjust table name to 'tblmahasiswa'
-			redirect('mahasiswa');
+			redirect('akademik');
 		} else {
 			$id = $this->uri->segment(3); // Get ID from URI segment
 			$data['data'] = $this->db->get_where('tblmahasiswa', array('id' => $id))->row_array(); // Adjust 'id_mahasiswa' to 'id'
 	
 			// Check user session status and load appropriate view
 			if ($this->session->userdata('login_status') == 'admin') {
-				$this->template->load('template', 'mahasiswa/editadmin', $data);
+				$this->template->load('template', 'akademik/editadmin', $data);
 			} else {
 				redirect('dashboard');
 			}
@@ -125,10 +138,12 @@ Class Pengaturan extends MX_Controller {
 	
 	
 	function lihat(){
-		 $id_peserta           = $this->uri->segment(3);
+		 $id_peserta = $this->uri->segment(3);
          $data['peserta'] = $this->db->get_where('tblmahasiswa',array('id'=>$id_peserta))->row_array();
 		if ($this->session->userdata('login_status')== 'admin') {
-            $this->template->load('template', 'mahasiswa/lihat',$data);
+            $this->template->load('template', 'akademik/lihat',$data);
+		} else if ($this->session->userdata('login_status')== 'mahasiswa'){
+			$this->template->load('templatepeserta','akademik/lihat',$data);
 		} else {
 			redirect('dashboard');
 		}
@@ -141,7 +156,7 @@ Class Pengaturan extends MX_Controller {
             $this->db->where('id',$id);
             $this->db->delete('tblmahasiswa');
         }
-        redirect('mahasiswa');
+        redirect('akademik');
     }
 
 }

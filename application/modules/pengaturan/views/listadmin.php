@@ -14,8 +14,6 @@
         <div class="col-7 align-self-center"></div>
         <div class="col-5 align-self-center">
             <div class="customize-input float-right">
-                <?php echo anchor('mahasiswa/add/', '<button class="btn waves-effect waves-light btn-rounded btn-success text-center">Tambah Data</button>'); ?>        
-                <button class="btn waves-effect waves-light btn-rounded btn-primary text-center" data-toggle="modal" data-target="#ModalaAdd">Import Data</button>
             </div>
         </div>
     </div>
@@ -28,17 +26,19 @@
                 <div class="card-body custom-input">
                     <h4 class="card-title">Data Mahasiswa</h4>
                     <form class="row g-3">
+                      <?php foreach($data as $u) { ?>
+
                       <div class="col-12"> 
                         <label class="form-label" for="nama-lengkap">Nama Lengkap</label>
-                        <input class="form-control" id="nama-lengkap" type="text" placeholder="Nama Lengkap" aria-label="Nama Lengkap">
+                        <input class="form-control" id="nama-lengkap" type="text" placeholder="Nama Lengkap" value="<?php echo $u->nama_mhs; ?>" aria-label="Nama Lengkap">
                       </div>
                       <div class="col-12"> 
                         <label class="form-label" for="nim">NIM</label>
-                        <input class="form-control" id="nim" type="text" placeholder="NIM" aria-label="NIM">
+                        <input class="form-control" id="nim" type="text" placeholder="NIM" value="<?php echo $u->nim; ?>" aria-label="NIM">
                       </div>
                       <div class="col-12"> 
                         <label class="form-label" for="nik">NIK</label>
-                        <input class="form-control" id="nik" type="text" placeholder="NIK" aria-label="NIK">
+                        <input class="form-control" id="nik" type="text" placeholder="NIK" value="<?php echo $u->nik_mhs; ?>" aria-label="NIK">
                       </div>
                       <div class="col-12"> 
                         <label class="form-label" for="jenis-kelamin">Jenis Kelamin</label>
@@ -50,19 +50,19 @@
                       </div>
                       <div class="col-12"> 
                         <label class="form-label" for="tempat-lahir">Tempat Lahir</label>
-                        <input class="form-control" id="tempat-lahir" type="text" placeholder="Tempat Lahir" aria-label="Tempat Lahir">
+                        <input class="form-control" id="tempat-lahir" type="text" placeholder="Tempat Lahir" value="<?php echo $u->tempat_lahir_mhs; ?>" aria-label="Tempat Lahir">
                       </div>
                       <div class="col-12">
                         <label class="form-label" for="date">Tanggal Lahir</label>
-                        <input class="form-control" id="date" type="date" aria-label="Date">
+                        <input class="form-control" id="date" type="date" value="<?php echo $u->tanggal_lahir_mhs; ?>" aria-label="Date">
                       </div>
                       <div class="col-12">
                         <label class="form-label" for="alamat">Alamat Lengkap</label>
-                        <input class="form-control" id="alamat" type="text" aria-label="Alamat Lengkap">
+                        <input class="form-control" id="alamat" type="text" value="<?php echo $u->alamat_mhs; ?>" aria-label="Alamat Lengkap">
                       </div>
                       <div class="col-12">
                         <label class="form-label" for="email">Email</label>
-                        <input class="form-control" id="email" type="email" placeholder="Email" aria-label="Email">
+                        <input class="form-control" id="email" type="email" value="<?php echo $u->email_mhs; ?>" placeholder="Email" aria-label="Email">
                       </div>
                       <div class="col-12"> 
                         <label class="form-label" for="password">Password</label>
@@ -73,6 +73,7 @@
                         <button class="btn btn-primary" type="submit">Submit</button>
                       </div>
                     </form>
+                    <?php } ?>
                 </div>
             </div>
         </div>
