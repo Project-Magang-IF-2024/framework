@@ -131,13 +131,24 @@ function auto_logout() {
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>dashboard"><i data-feather="home"></i><span class="lan-3">Dashboard</span></a>
                 </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>proposal"><i data-feather="book-open"></i><span class="lan-26">Proposal</span></a>
+                </li>
 				<li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>mahasiswa"><i data-feather="users"></i><span class="lan-25">Mahasiswa</span></a>
                 </li>
                <li class="sidebar-list">
-                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>usulan"><i data-feather="globe"></i><span class="lan-26">Pengajuan</span></a>
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>bimbingan"><i data-feather="calendar"></i><span class="lan-26">Bimbingan</span></a>
                 </li>
-                
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>catatanbimbingan"><i data-feather="bookmark"></i><span class="lan-26">Catatan Bimbingan</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>laporan"><i data-feather="book"></i><span class="lan-26">Laporan</span></a>
+                </li>
+                <li class="sidebar-list">
+                  <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>profil"><i data-feather="user"></i><span class="lan-26">Profil</span></a>
+                </li>
                 <li class="sidebar-list">
                   <a class="sidebar-link sidebar-title" href="<?php echo base_url() ?>auth/logout"><i data-feather="log-out"></i><span class="lan-10">Logout</span></a>
                 </li>
