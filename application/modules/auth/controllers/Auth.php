@@ -52,10 +52,7 @@ class Auth extends MX_Controller {
                 'logged' => TRUE,
                 'login_status' => 'dosen',
                 'nama' => $row->username_dosen,
-                'id' => $row->id,
-                'nik' => $row->nik_dosen,
-                'namaa' => $row->nama_dosen,
-                'jabatan' => $row->jabatan_dosen,
+                'id' => $row->id
             );
             $this->session->set_userdata($data);
             $this->handleRememberMe($email, $password);
@@ -72,7 +69,6 @@ class Auth extends MX_Controller {
                 'logged' => TRUE,
                 'login_status' => 'mahasiswa',
                 'nama' => $row->nama_mhs,
-                'nim' => $row->nim,
                 'id' => $row->id
             );
             $this->session->set_userdata($data);

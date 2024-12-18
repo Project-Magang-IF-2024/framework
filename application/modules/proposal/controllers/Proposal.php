@@ -23,9 +23,6 @@ Class Proposal extends MX_Controller {
 		} else if ($this->session->userdata('login_status')== 'prodi') {
 			$data['data'] = $this->db->select('*')->from('tblproposal')->like('judul_proposal', $this->session->userdata('nama'))->get()->result(); //Untuk mengambil data dari database webinar
 			$this->template->load('templateprodi','proposal/listadmin', $data);
-		} else if($this->session->userdata('login_status') == 'mahasiswa'){
-			$data['data'] = $this->db->select('*')->from('tblproposal')->where('nim_prop', $this->session->userdata());
-			$this->template->load('templatepeserta', 'proposal/listadmin', $data);
 		} else {
 			redirect('dashboard');
 		}
